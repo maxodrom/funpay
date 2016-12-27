@@ -9,13 +9,15 @@ class TestSms
      * Анализирует входную строку $str на наличие кода подтверждения, суммы и кошелька.
      * В случае успеха возвращает массив с ключами 'confirmCode', 'amount' и 'YD',
      * соответствующими найденным коду подтверждения ("пароль"), итоговой суммы списания и номера YD-кошелька.
-     * В случае неуспеха возращает false.
+     * В случае неуспеха возращает выбрасывает исключение, что говорит, что полноценный разбор не был выполнен.
      *
      * @param string $str
+     * @param bool $raiseException
      *
-     * @return array|false
+     * @return array
+     * @throws \Exception
      */
-    public static function parseResponse($str)
+    public static function parseResponse($str, $raiseException = true)
     {
         $patterns = [
             /**
@@ -55,6 +57,13 @@ class TestSms
             }
         }
 
-        return !empty($result) ? $result : false;
+        // если в массиве содержатся только некоторые ключи, можно выбросить исключение,
+        // что означало бы частичтный парсинг, который где-то фейлится.
+        $failedKeys = array_diff_key($patterns, $result);
+        if (true === $raiseException && count($failedKeys) > 0) {
+            throw new \Exception("Parsing failed. Failed keys are: " . implode(', ', array_keys($failedKeys)));
+        }
+
+        return $result;
     }
 }
