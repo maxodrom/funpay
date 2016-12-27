@@ -24,8 +24,12 @@ $str2 = <<<'STR'
  введите пароль: 7777.
 STR;
 
-$result = TestSms::parseResponse($str);
-$result2 = TestSms::parseResponse($str2);
+try {
+    $result = TestSms::parseResponse($str);
+    $result2 = TestSms::parseResponse($str2);
+} catch (Exception $e) {
+    echo $e->getMessage();
+}
 
 var_dump($result);
 var_dump($result2);
