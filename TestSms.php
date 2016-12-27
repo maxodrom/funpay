@@ -1,5 +1,7 @@
 <?php
 
+use Faker\Factory as FF;
+
 /**
  * Class TestSms
  */
@@ -65,5 +67,19 @@ class TestSms
         }
 
         return $result;
+    }
+
+    /**
+     * Retirns html content for Bootstrap modal.
+     *
+     * @return string
+     */
+    public static function fakerTest()
+    {
+        $generator = FF::create();
+        $text = $generator->text(500);
+        $text = '<div style="color:' . $generator->hexColor . '">' . $text . '</div>';
+
+        return $text;
     }
 }
