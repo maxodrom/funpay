@@ -59,9 +59,9 @@ class TestSms
 
         // если в массиве содержатся только некоторые ключи, можно выбросить исключение,
         // что означало бы частичтный парсинг, который где-то фейлится.
-        $failedKeys = array_diff_key($patterns, $result);
-        if (true === $raiseException && count($failedKeys) > 0) {
-            throw new \Exception("Parsing failed. Failed keys are: " . implode(', ', array_keys($failedKeys)));
+        $keysDiff = array_diff_key($patterns, $result);
+        if (true === $raiseException && count($keysDiff) > 0) {
+            throw new \Exception("Parsing failed. Failed keys are: " . implode(', ', array_keys($keysDiff)));
         }
 
         return $result;
