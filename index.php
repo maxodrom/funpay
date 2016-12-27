@@ -1,8 +1,5 @@
 <?php
-
-spl_autoload_register(function ($class_name) {
-    require_once __DIR__ . DIRECTORY_SEPARATOR . $class_name . '.php';
-});
+require_once __DIR__ . '/vendor/autoload.php';
 
 /**
  * Вариант Response с сайта funpay.
